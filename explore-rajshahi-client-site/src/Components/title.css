@@ -1,0 +1,9 @@
+.title::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width: 5px;
+    background-color: yellow;
+}
