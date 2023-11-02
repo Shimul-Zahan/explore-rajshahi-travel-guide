@@ -57,11 +57,11 @@ async function run() {
         const allPlaces = client.db("ExploreRajshahi").collection("allPlaces");
         // const haiku = database.collection("haiku");
 
-        app.get('/districts', async (req, res) => {
+        app.get('/districts', verify, async (req, res) => {
             const result = await allDistrict.find().toArray();
             res.send(result)
         })
-        app.get('/thanas',  async (req, res) => {
+        app.get('/thanas', async (req, res) => {
             const result = await allThana.find().toArray();
             res.send(result)
         })
@@ -124,7 +124,7 @@ async function run() {
 
         app.post('/logout', async (req, res) => {
             const body = req.body;
-            res.clearCookie('token', {maxAge: 0}).send({Message: 'Successfully cookie delete'})
+            res.clearCookie('token', { maxAge: 0 }).send({ Message: 'Successfully cookie delete' })
         })
 
         app.delete('/districts/:id', async (req, res) => {

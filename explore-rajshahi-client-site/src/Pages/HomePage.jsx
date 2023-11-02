@@ -1,27 +1,20 @@
 import React from 'react'
 import Banner from '../Components/Banner'
 import Title from '../Components/Title'
-// import { useQuery } from '@tanstack/react-query'
-// import Swal from 'sweetalert2'
+import loading from '../assets/loading.gif'
 import useDistricts from '../Hooks/useDistricts'
 import Navbar from '../Components/Navbar'
 import { Link } from 'react-router-dom'
 
 const HomePage = () => {
 
-    // const {data, isLoading} = useQuery({
-    //     queryKey: ['districts'],
-    //     queryFn: async () => {
-    //         const allDistricts = await fetch('http://localhost:5000/districts')
-    //         return await allDistricts.json()
-    //     }
-    // })
-
     const { data, isLoading } = useDistricts()
     console.log(data)
 
     if (isLoading) {
-        return <div>Loading</div>
+        return <div className='h-screen w-full flex justify-center items-center'>
+            <img src={loading} alt="" />
+        </div>
     }
 
     return (

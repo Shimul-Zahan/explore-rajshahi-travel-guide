@@ -2,11 +2,14 @@ import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged,
 import React, { createContext, useEffect, useState } from 'react'
 import auth from '../Firebase/firebase.config'
 import axios from 'axios'
+import useAxios from '../Hooks/useAxios'
 export const MyContext = createContext(null)
 
 const AuthContext = ({ children }) => {
 
     const [user, setUser] = useState(null);
+    const instance = useAxios();
+    // console.log(instance)
 
     const emailRegistration = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
@@ -27,10 +30,10 @@ const AuthContext = ({ children }) => {
             const userEmail = currentUser?.email || user?.email;
             const loggedUser = { email: userEmail };
             if (currentUser) {
-                axios.post('http://localhost:5000/jwt', loggedUser, {withCredentials: true})
+                instance.post('/jwt', loggedUser)
                     .then(res => console.log(res.data));
             } else {
-                axios.post('http://localhost:5000/logout', loggedUser, {withCredentials: true})
+                instance.post('/logout', loggedUser)
                     .then(res => console.log(res.data));
             }
         })

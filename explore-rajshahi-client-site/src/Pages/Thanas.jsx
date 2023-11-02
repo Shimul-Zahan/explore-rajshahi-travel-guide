@@ -9,7 +9,7 @@ const Thanas = () => {
     console.log(data)
 
     return (
-        <div>
+        <div className='mb-20'>
             <div className='bg-black'>
                 <Navbar />
             </div>
