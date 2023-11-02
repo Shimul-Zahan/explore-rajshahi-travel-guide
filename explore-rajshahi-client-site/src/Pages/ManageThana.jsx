@@ -1,23 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useThana from '../Hooks/useThana'
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { GrUpdate } from 'react-icons/gr';
 import { MdDeleteForever } from 'react-icons/md';
 import axios from 'axios';
 import BgImage from '../assets/update.jpg'
 import Title from '../Components/Title';
+// import loading from '../assets/loading.gif'
+
 
 
 const ManageThana = () => {
 
-    const { data, isLoading, refetch } = useThana();
-    console.log(data);
+    // const { data, isLoading, refetch } = useThana();
+    const [data, setData] = useState([]);
+    const total = useLoaderData();
+    const [items, setItems] = useState(10);
+    const [currentPage, setCurrentPage] = useState(0);
+    const totalPage = Math.ceil(total.count / items);
+    const pages = [...Array(totalPage).keys()]
 
-    if (isLoading) {
-        return <div>Loading...</div>
+    // if (isLoading) {
+    //     return <div className='h-screen w-full flex justify-center items-center'>
+    //         <img src={loading} alt="" />
+    //     </div>
+    // }
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/thanas?page=${currentPage}&size=${items}`)
+        .then(res=> setData(res.data))
+    }, [currentPage, items])
+
+    const handleItemPerPage = (e) => {
+        // console.log(e.target.value)
+        setItems(parseInt(e.target.value))
+        setCurrentPage(0)
     }
 
-    console.log(data)
+    const handlePrevious = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+
+    const handleNext = () => {
+        if (currentPage < pages.length - 1) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+
+    // console.log(data)
 
     const handleDelete = async (id) => {
         const res = await axios.delete(`http://localhost:5000/thanas/${id}`)
@@ -55,6 +87,20 @@ const ManageThana = () => {
                             </div>
                         )
                     }
+                </div>
+                <div className='my-20 flex justify-center items-center'>
+                    <button onClick={handlePrevious} className='btn'>Previous</button>
+                    {
+                        pages.map(page => {
+                            return <button key={page} onClick={() => setCurrentPage(page)} className={`btn mx-4 ${currentPage === page && 'bg-yellow-500'}`}>{ page }</button>
+                        })
+                    }
+                    <button onClick={handleNext} className='btn'>Next</button>
+                    <select onChange={handleItemPerPage} value={items} name="" id="">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
                 </div>
             </div>
         </div>

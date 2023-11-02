@@ -68,7 +68,8 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/manage-thana',
-                element: <ManageThana />
+                element: <ManageThana />,
+                loader: async () => await fetch('http://localhost:5000/thanaCount')
             },
             {
                 path: '/dashboard/manage-tourplace',

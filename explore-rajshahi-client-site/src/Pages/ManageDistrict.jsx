@@ -6,6 +6,8 @@ import { GrUpdate } from 'react-icons/gr';
 import { MdDeleteForever } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import loading from '../assets/loading.gif'
+
 // GrUpdate
 
 const ManageDistrict = ({ children }) => {
@@ -14,7 +16,9 @@ const ManageDistrict = ({ children }) => {
     // console.log(data)
 
     if (isLoading) {
-        return <div>Loading</div>
+        return <div className='h-screen w-full flex justify-center items-center'>
+            <img src={loading} alt="" />
+        </div>
     }
 
     const handleDelete = async (id) => {

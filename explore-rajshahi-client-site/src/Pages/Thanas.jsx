@@ -6,7 +6,7 @@ import Title from '../Components/Title';
 const Thanas = () => {
 
     const data = useLoaderData();
-    console.log(data)
+    // console.log(data)
 
     return (
         <div className='mb-20'>

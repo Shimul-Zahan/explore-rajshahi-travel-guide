@@ -6,12 +6,16 @@ import { Link } from 'react-router-dom';
 import { GrUpdate } from 'react-icons/gr';
 import { MdDeleteForever } from 'react-icons/md';
 import axios from 'axios';
+import loading from '../assets/loading.gif'
+
 
 const ManageTourPlace = () => {
 
   const { data, isLoading, refetch } = usePlaces();
   if (isLoading) {
-    return <div>Loading</div>
+    return <div className='h-screen w-full flex justify-center items-center'>
+      <img src={loading} alt="" />
+    </div>
   }
 
   const handleDelete = async (id) => {

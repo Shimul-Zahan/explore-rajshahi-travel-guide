@@ -62,8 +62,15 @@ async function run() {
             res.send(result)
         })
         app.get('/thanas', async (req, res) => {
-            const result = await allThana.find().toArray();
+            const page = parseInt(req.query.page);
+            const size = parseInt(req.query.size);
+            const result = await allThana.find().skip(page * size).limit(size).toArray();
             res.send(result)
+        })
+
+        app.get('/thanaCount', async (req, res) => {
+            const result = await allThana.estimatedDocumentCount();
+            res.send({ count: result });
         })
 
         app.get('/thanas/:name', async (req, res) => {
