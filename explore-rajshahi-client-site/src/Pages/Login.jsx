@@ -21,8 +21,8 @@ const Login = () => {
             .then(res => {
                 // navigate('/')
                 const user = {email}
-                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
-                .then(res => console.log(res.data))
+                // axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                // .then(res => console.log(res.data))
             })
             .catch(err => console.log("token : ", err))
     }

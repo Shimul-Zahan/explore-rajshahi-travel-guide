@@ -35,7 +35,7 @@ const verify = async (req, res, next) => {
 }
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const uri = "mongodb+srv://exploreRajshahi:782dTnZWUx09x1ai@shimulclaster1.85diumq.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@shimulclaster1.85diumq.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -61,7 +61,7 @@ async function run() {
             const result = await allDistrict.find().toArray();
             res.send(result)
         })
-        app.get('/thanas', verify, async (req, res) => {
+        app.get('/thanas',  async (req, res) => {
             const result = await allThana.find().toArray();
             res.send(result)
         })
@@ -73,7 +73,7 @@ async function run() {
             const result = await allThana.find(query).toArray();
             res.send(result)
         })
-        app.get('/places', verify, async (req, res) => {
+        app.get('/places', async (req, res) => {
             const result = await allPlaces.find().toArray();
             res.send(result)
         })
@@ -112,6 +112,7 @@ async function run() {
         // jwt
         app.post('/jwt', (req, res) => {
             const body = req.body;
+            console.log(body)
             const token = jwt.sign(body, process.env.ACCESS_TOKEN, { expiresIn: '1h' })
             res.cookie('token', token, {
                 httpOnly: true,
@@ -119,6 +120,11 @@ async function run() {
                 secure: false,
             })
             res.send({ success: true, token });
+        })
+
+        app.post('/logout', async (req, res) => {
+            const body = req.body;
+            res.clearCookie('token', {maxAge: 0}).send({Message: 'Successfully cookie delete'})
         })
 
         app.delete('/districts/:id', async (req, res) => {

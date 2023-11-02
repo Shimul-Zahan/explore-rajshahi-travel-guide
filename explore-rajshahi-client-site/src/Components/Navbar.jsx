@@ -12,7 +12,7 @@ const Navbar = () => {
     const { user } = useContext(MyContext);
     const logOut = () => {
         signOut(auth)
-            .then(res => console.log(res))
+            .then(res => console.log('successfully logout'))
             .catch(err => console.log(err));
     }
 
